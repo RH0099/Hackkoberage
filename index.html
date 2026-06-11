@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সুপার নেট - এন্টারপ্রাইজ ড্যাশবোর্ড</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* প্রফেশনাল গ্লাস-মরফিজম কার্ড */
+        .container {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        /* লোগো ও ব্র্যান্ডিং */
+        .logo-area {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 5px 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .badge {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* টেক্সট কন্টেন্ট */
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        /* সুন্দর গোল বাটন ও স্টাইল */
+        .btn-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .power-btn {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #1e293b;
+            border: 4px solid #334155;
+            color: #64748b;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        /* অন করার পরের আকর্ষনীয় গ্লোয়িং ও লাইটিং স্টেট */
+        .power-btn.active {
+            color: #fff;
+            background: #0284c7;
+            border-color: #38bdf8;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.6), 
+                        0 0 60px rgba(56, 189, 248, 0.3),
+                        inset 0 2px 5px rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        /* ব্যাকগ্রাউন্ড ম্যাজিক লাইট ইফেক্ট (ডিফল্ট অফ) */
+        .bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1px;
+            height: 1px;
+            border-radius: 50%;
+            box-shadow: 0 0 0px 0px rgba(56, 189, 248, 0);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .bg-glow.active {
+            box-shadow: 0 0 120px 60px rgba(56, 189, 248, 0.25),
+                        0 0 250px 120px rgba(168, 85, 247, 0.2),
+                        0 0 350px 180px rgba(236, 72, 153, 0.15);
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        /* স্ট্যাটাস ইন্ডিকেটর */
+        .status-text {
+            font-size: 0.9rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .status-text.active {
+            color: #38bdf8;
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+        }
+
+        /* ফুটার বা ডেকোরেশন */
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: #475569;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        /* লাইটিং অ্যানিমেশন */
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow" id="bgGlow"></div>
+
+    <div class="container">
+        <div class="logo-area">SUPER NET</div>
+        
+        <div class="badge">সিকিউরড এন্টারপ্রাইজ পোর্টাল</div>
+
+        <h1>সুপার নেট-এ আপনাকে স্বাগতম</h1>
+        <p>
+            এই প্ল্যাটফর্মটি শুধুমাত্র সেই সকল প্রিমিয়াম ইউজারদের জন্য তৈরি, যাদের ফেসবুক আইডিতে বিভিন্ন ধরনের জটিল সমস্যা দেখা দিয়েছে অথবা ফেসবুক অফিসিয়াল টিম থেকে অ্যাকাউন্ট ওয়ার্নিং (Warning) চলে এসেছে। আপনার প্রোফাইল সুরক্ষিত করতে নিচের সিকিউরড বাটনটি অন করুন।
+        </p>
+
+        <div class="btn-container">
+            <button class="power-btn" id="powerBtn">OFF</button>
+        </div>
+        
+        <div class="status-text" id="statusText">সিস্টেম নিষ্ক্রিয়</div>
+
+        <div class="footer-note">
+            © 2026 সুুপার নেট ইনকর্পোরেশন। অল রাইটস রিজার্ভড।
+        </div>
+    </div>
+
+    <script>
+        const powerBtn = document.getElementById('powerBtn');
+        const bgGlow = document.getElementById('bgGlow');
+        const statusText = document.getElementById('statusText');
+
+        let isOn = false;
+
+        powerBtn.addEventListener('click', () => {
+            isOn = !isOn;
+
+            if (isOn) {
+                // বাটন অন স্টেট
+                powerBtn.textContent = 'ON';
+                powerBtn.classList.add('active');
+                bgGlow.classList.add('active');
+                statusText.textContent = 'সিস্টেম সক্রিয় (রঙিন আলো মোড)';
+                statusText.classList.add('active');
+            } else {
+                // বাটন অফ স্টেট
+                powerBtn.textContent = 'OFF';
+                powerBtn.classList.remove('active');
+                bgGlow.classList.remove('active');
+                statusText.textContent = 'সিস্টেম নিষ্ক্রিয়';
+                statusText.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
